@@ -18,8 +18,8 @@ export async function up(knex: Knex): Promise<void> {
         table.boolean("is_active").defaultTo(true);
         table.integer("organizer_id").unsigned().notNullable();
         table.foreign("organizer_id").references("id").inTable("users").onDelete("CASCADE");
-        table.integer("sports_id").unsigned().notNullable();
-        table.foreign("sports_id").references("id").inTable("sports").onDelete("CASCADE");
+        table.integer("sport_id").unsigned().notNullable();
+        table.foreign("sport_id").references("id").inTable("sports").onDelete("CASCADE");
         table.integer("sub_district_id").unsigned().notNullable();
         table.foreign("sub_district_id").references("id").inTable("sub_districts").onDelete("CASCADE");
         table.timestamps(true, true);
