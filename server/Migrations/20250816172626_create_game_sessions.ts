@@ -10,7 +10,7 @@ export async function up(knex: Knex): Promise<void> {
         table.integer("skill_level");
         table.integer("max_players").notNullable();
         table.date("game_date").notNullable();
-        table.time("game_time").notNullable();
+        table.time("start_time").notNullable();
         table.time("end_time").notNullable();
         table.integer("fee").notNullable();
         table.string("ball_brand");
