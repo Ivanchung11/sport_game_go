@@ -8,7 +8,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://192.168.1.XXX:3000', // Your computer's IP
+    'exp://192.168.1.XXX:19000'  // Expo development server
+  ]
+}));
+
 app.use(express.json());
 
 // app.use('/api/users', userRoutes);
