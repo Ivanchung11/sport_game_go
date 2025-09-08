@@ -1,12 +1,28 @@
 import express from 'express';
+import expressSession from "express-session";
 import cors from 'cors';
 import dotenv from 'dotenv';
-// import userRoutes from './routes/userRoutes';
+import userRoutes from './routers/userRouter';
 
 dotenv.config();
 
+declare module "express-session" {
+  interface SessionData {
+    userId: number;
+  }
+}
+
+const sessionMiddleware = expressSession({
+  secret: "Tecky Academy teaches typescript",
+  resave: true,
+  saveUninitialized: true,
+});
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(sessionMiddleware);
+app.use(express.json());
 
 app.use(cors({
   origin: [
@@ -18,14 +34,14 @@ app.use(cors({
 
 app.use(express.json());
 
-app.get('/api/user/:id', async (req, res) => {
-  // Fetch user from database
-  res.json({ id: 1, email: 'test@example.com', name: 'Test User' });
-});
-
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'Server is running!' });
-});
+// app.get('/api/user/:id', async (req, res) => {
+//   // Fetch user from database
+//   res.json({ id: 1, email: 'test@example.com', name: 'Test User' });
+// });
+app.use(userRoutes);
+// app.get('/api/health', (req, res) => {
+//   res.json({ status: 'Server is running!' });
+// });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
