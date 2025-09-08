@@ -11,7 +11,8 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { authAPI } from '../services/api';
+// import { authAPI } from '../services/api';
+import { userAPI } from '../services/userApi';
 import { RootStackParamList } from '../navigation/AppNavigator';
 
 type LoginScreenNavigationProp = StackNavigationProp<
@@ -24,16 +25,17 @@ interface Props {
 }
 
 const LoginScreen: React.FC<Props> = ({ navigation }) => {
-  const [email, setEmail] = useState('user@example.com');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('admin@example.com');
+  const [password, setPassword] = useState('admin');
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await authAPI.login(email, password);
-      await AsyncStorage.setItem('token', response.data.token);
-      await AsyncStorage.setItem('user', JSON.stringify(response.data.user));
+      const response = await userAPI.login(email, password);
+      await AsyncStorage.setItem('token', response.token);
+      // await AsyncStorage.setItem('user', JSON.stringify(response.data.user));
+      // return Alert.alert(response.msg, 'You have successfully logged in!');
       navigation.navigate('Home');
     } catch (error) {
       Alert.alert('Error', 'Login failed. Please check your credentials.');
