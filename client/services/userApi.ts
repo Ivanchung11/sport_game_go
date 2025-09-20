@@ -12,11 +12,11 @@ export const userAPI = {
     return data; // { token, user }
   },
 
-  register: async (name: string, email: string, password: string) => {
+  register: async (name: string, email: string, password: string, gender: string) => {
     const response = await fetch(`${BASE_URL}/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, email, password, gender }),
     });
 
     const data = await response.json();

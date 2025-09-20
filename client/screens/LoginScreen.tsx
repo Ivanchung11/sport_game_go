@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert,
   SafeAreaView,
+  Button,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -82,6 +83,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         <Text style={styles.hint}>
           Use: user@example.com / password123
         </Text>
+        <Button title="Register" onPress={() => navigation.navigate('Register')} />
       </View>
     </SafeAreaView>
   );
