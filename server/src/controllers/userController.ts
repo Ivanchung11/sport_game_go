@@ -44,39 +44,33 @@ export class UserController {
       } catch (error: any) {
          res.status(500).json({ msg: error.message });
       }
-    // if (email =="test@example.com" && password == "Test User") {
-    //     const token = jwt.sign({ userId: "1", email: "test@example.com" }, process.env.JWT_SECRET as string);
-    //     return res.json({ token });
-    // } else {
-    //     return res.status(401).json({ message: "Invalid credentials" });
-    // }
    }
 
     register = async (req: Request, res: Response, next: NextFunction) => {
 
-        if (!req.body.email) {
-            req.body.error = "Missing email";
-            req.body.statusCode = 400;
-            next();
-        }
         const email = req.body.email;
+        if (email == "") {
+            res.status(400).json({ msg: "Missing email" });
+            return;
+        }
         const checkEmail = await UserModel.getUserByEmail(email);
         if (checkEmail) {
             res.status(401).json({ msg: "account already exist!" });
             return;
         }
+        res.json({ msg: email });
 
-        const password = await hashPassword(req.body.password);
-        const name = req.body.name;
-        const gender = req.body.gender;
-        try {
-            const user = await UserModel.createUser(email, password, name, gender);
-            const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET as string,{
-                expiresIn: '1h'
-            });
-            res.json({ token });
-        } catch (error: any) {
-            res.status(500).json({ msg: error.message });
-        }
+        // const password = await hashPassword(req.body.password);
+        // const name = req.body.name;
+        // const gender = req.body.gender;
+        // try {
+        //     const user = await UserModel.createUser(email, password, name, gender);
+        //     const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET as string,{
+        //         expiresIn: '1h'
+        //     });
+        //     res.json({ token });
+        // } catch (error: any) {
+        //     res.status(500).json({ msg: error.message });
+        // }
    }
 }
