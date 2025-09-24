@@ -20,11 +20,11 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-export const authAPI = {
-  login: (email: string, password: string) =>
-    api.post('/users/login', { email, password }),
-  register: (email: string, password: string, name: string) =>
-    api.post('/users/register', { email, password, name }),
-};
+// export const authAPI = {
+//   login: (email: string, password: string) =>
+//     api.post('/users/login', { email, password }),
+//   register: (email: string, password: string, name: string) =>
+//     api.post('/users/register', { email, password, name }),
+// };
 
 export default api;

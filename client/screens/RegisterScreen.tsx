@@ -27,7 +27,7 @@ export default function RegisterScreen() {
       } else {
         try {
             await userAPI.register(name, email, password, gender);
-            navigation.navigate('Login');
+            navigation.navigate('Home');
         } catch (err: any) {
             Alert.alert('register unsuccessful', err.message);
         }finally {

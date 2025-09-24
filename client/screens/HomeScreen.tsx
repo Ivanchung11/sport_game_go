@@ -1,5 +1,20 @@
 import React from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  Button, 
+  FlatList, 
+  StyleSheet, 
+  TouchableOpacity,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons'; 
+import { itemAPI } from '../services/itemApi';
+type DrawerParamList = {
+  Home: undefined;
+};
 
 const bookings = [
   {
@@ -13,17 +28,52 @@ const bookings = [
     createdBy: 'KenYuen',
     createdAt: '04 Sep 2025, 2:18 pm',
   },
+  {
+    id: '2',
+    location: '天水圍',
+    type: '不限',
+    date: '2025年9月3日, 星期三',
+    time: '3:00 PM - 5:00 PM',
+    court: '天水圍網球場',
+    ntrp: '2.5',
+    createdBy: 'KenYuen',
+    createdAt: '04 Sep 2025, 2:18 pm',
+  },
   // Add more bookings here...
 ];
 
 const HomeScreen = () => {
+  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
+
+  const getData = async () => {
+    try {
+      const data = await itemAPI.getItems();
+      console.log('Fetched data:', data);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+      
+    }
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
+  
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.title}>TennisGo HK</Text>
-        <TextInput style={styles.search} placeholder="搜尋球場或地區" />
-        <Button title="發起球賽" onPress={() => {}} />
+        <View style={styles.searchRow}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="搜尋地區"
+            placeholderTextColor="#888"
+          />
+          <TouchableOpacity style={styles.filterButton} onPress={() => console.log('Open filter')}>
+            <Ionicons name="filter" size={18} color="#fff" />
+            <Text style={styles.filterText}>篩選</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Booking List */}
@@ -61,13 +111,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
   },
-  search: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 8,
-    marginVertical: 8,
-    borderRadius: 4,
-  },
   card: {
     padding: 12,
     marginVertical: 8,
@@ -78,5 +121,34 @@ const styles = StyleSheet.create({
   location: {
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  filterText: {
+    color: '#fff',
+    marginLeft: 4,
+    fontWeight: 'bold',
+  },
+  searchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    marginVertical: 12,
+  },
+  searchInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    height: 40,
+    backgroundColor: '#f2f2f2',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+  },
+  filterButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#4CAF50',
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginLeft: 8,
   },
 });
