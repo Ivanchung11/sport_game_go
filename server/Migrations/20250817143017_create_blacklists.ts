@@ -7,8 +7,8 @@ export async function up(knex: Knex): Promise<void> {
         table.string("reason").notNullable();
         table.integer("user_id").unsigned().notNullable();
         table.foreign("user_id").references("id").inTable("users").onDelete("CASCADE");
-        table.integer("blacklisted_user_id").unsigned().notNullable();
-        table.foreign("blacklisted_user_id").references("id").inTable("users").onDelete("CASCADE");
+        table.integer("blacklist_by_id").unsigned().notNullable();
+        table.foreign("blacklist_by_id").references("id").inTable("users").onDelete("CASCADE");
         table.integer("game_session_id").unsigned().notNullable();
         table.foreign("game_session_id").references("id").inTable("game_sessions").onDelete("CASCADE");
         table.timestamps(true, true);

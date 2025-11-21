@@ -48,6 +48,7 @@ const HomeScreen = () => {
   const getData = async () => {
     try {
       const data = await itemAPI.getItems();
+      
       console.log('Fetched data:', data);
     } catch (error) {
       console.error('Failed to fetch data:', error);

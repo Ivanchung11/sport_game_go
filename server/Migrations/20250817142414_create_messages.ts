@@ -5,8 +5,8 @@ export async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable("messages", (table) => {
         table.increments("id").primary();
         table.text("content").notNullable();
-        table.integer("game_session_id").unsigned().notNullable();
-        table.foreign("game_session_id").references("id").inTable("game_sessions").onDelete("CASCADE");
+        // table.integer("game_session_id").unsigned().notNullable();
+        // table.foreign("game_session_id").references("id").inTable("game_sessions").onDelete("CASCADE");
         table.integer("participation_id").unsigned().notNullable();
         table.foreign("participation_id").references("id").inTable("participations").onDelete("CASCADE");
         table.integer("sender_id").unsigned().notNullable();
